@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Федор](https://up.htmlacademy.ru/react/16/user/2453425).
-* Наставник: `Неизвестно`.
+* Наставник: [Сергей Зуев](https://htmlacademy.ru/profile/ekzaton).
 
 ---
 
