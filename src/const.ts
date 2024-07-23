@@ -1,5 +1,3 @@
-import { RatingGrade } from './types';
-
 export enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -15,7 +13,7 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export const ReviewFormRating: RatingGrade = [
+export const ReviewFormRating = [
   {title: 'perfect', mark: 5},
   {title: 'good', mark: 4},
   {title: 'not bad', mark: 3},

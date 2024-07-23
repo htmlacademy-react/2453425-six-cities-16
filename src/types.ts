@@ -55,11 +55,6 @@ export type OfferDetails = {
   maxAdults: number;
 };
 
-export type RatingGrade = {
-  title: string;
-  mark: number;
-}[];
-
 export type Comment = {
   id: string;
   date: string;
