@@ -7,16 +7,21 @@ import NotFound from '../../pages/not-found/not-found';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import {PrivateRoute, PublicRoute} from '../access-route.tsx/access-route';
 import { HelmetProvider } from 'react-helmet-async';
+import { Offers } from '../../types';
 
-const authorizationStatus = AuthorizationStatus.NoAuth;
+const authorizationStatus = AuthorizationStatus.Auth;
 
-function App(props: {offersCount: number}): JSX.Element {
+type AppProps = {
+  mockOffers: Offers;
+}
+
+function App({mockOffers}: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route path={AppRoute.Main}>
-            <Route index element={<Main offersCount={props.offersCount} />} />
+            <Route index element={<Main mockOffers={mockOffers} />} />
             <Route
               path={AppRoute.Login}
               element={
@@ -29,7 +34,7 @@ function App(props: {offersCount: number}): JSX.Element {
               path={AppRoute.Favorites}
               element={
                 <PrivateRoute status={authorizationStatus}>
-                  <Favorites />
+                  <Favorites mockOffers={mockOffers} />
                 </PrivateRoute>
               }
             />
