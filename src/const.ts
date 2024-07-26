@@ -12,3 +12,11 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const ReviewFormRating = [
+  {title: 'perfect', mark: 5},
+  {title: 'good', mark: 4},
+  {title: 'not bad', mark: 3},
+  {title: 'badly', mark: 2},
+  {title: 'terribly', mark: 1}
+] as const;
