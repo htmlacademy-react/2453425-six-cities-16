@@ -20,3 +20,7 @@ export const ReviewFormRating = [
   {title: 'badly', mark: 2},
   {title: 'terribly', mark: 1}
 ] as const;
+
+export const URL_MARKER_DEFAULT = './img/pin.svg';
+
+export const URL_MARKER_ACTIVE = './img/pin-active.svg';

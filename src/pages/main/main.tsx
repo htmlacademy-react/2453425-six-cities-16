@@ -1,17 +1,18 @@
 import { Helmet } from 'react-helmet-async';
-// import Card from '../../components/card/card';
 import Header from '../../components/header/header';
 import Navigation from '../../components/navigation/navigation';
 import { Offer, Offers } from '../../types';
 import CitiesList from '../../components/cities-list/cities-list';
 import { useState } from 'react';
+import Map from '../../components/map/map';
 
 type MainProps = {
   mockOffers: Offers;
 }
 
 function Main({mockOffers}: MainProps): JSX.Element {
-  const [, setPointedOffer] = useState<Offer | null>(null);
+  const [pointedOffer, setPointedOffer] = useState<Offer | null>(null);
+  const points = mockOffers.map((offer) => ({id: offer.id, location: offer.location}));
 
   return (
     <div className="page page--gray page--main">
@@ -45,9 +46,7 @@ function Main({mockOffers}: MainProps): JSX.Element {
               </form>
               <CitiesList offers={mockOffers} onPointedOfferChange={setPointedOffer}/>
             </section>
-            <div className="cities__right-section">
-              <section className="cities__map map"></section>
-            </div>
+            <Map city={mockOffers[0].city} points={points} selectedPoint={{id: pointedOffer?.id, location: pointedOffer?.location}} />
           </div>
         </div>
       </main>
