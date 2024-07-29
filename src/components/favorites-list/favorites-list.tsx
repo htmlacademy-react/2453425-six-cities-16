@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import { Offer } from '../../types';
-import Card from '../card/card';
+import PlaceCard from '../place-card/place-card';
 import { AppRoute } from '../../const';
 
 type FavoritesListProps = {
   groupedOffers: Record<string, Offer[]>;
-}
+};
 
-function FavoritesList({groupedOffers}: FavoritesListProps): JSX.Element {
+function FavoritesList({ groupedOffers }: FavoritesListProps): JSX.Element {
   return (
     <ul className="favorites__list">
       {Object.keys(groupedOffers).map((city) => (
@@ -21,13 +21,13 @@ function FavoritesList({groupedOffers}: FavoritesListProps): JSX.Element {
           </div>
           <div className="favorites__places">
             {groupedOffers[city].map((offer) => (
-              <Card
+              <PlaceCard
                 key={offer.id}
                 offer={offer}
                 options={{
                   classNamePrefix: 'favorites',
                   imageWidth: 150,
-                  imageHeight: 110
+                  imageHeight: 110,
                 }}
               />
             ))}

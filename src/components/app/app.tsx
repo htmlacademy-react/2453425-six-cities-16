@@ -1,11 +1,11 @@
-import Main from '../../pages/main/main';
+import MainPage from '../../pages/main-page/main-page';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Favorites from '../../pages/favorites/favorites';
-import Login from '../../pages/login/login';
-import Offer from '../../pages/offer/offer';
-import NotFound from '../../pages/not-found/not-found';
+import FavoritesPage from '../../pages/favorites-page/favorites-page';
+import LoginPage from '../../pages/login-page/login-page';
+import OfferPage from '../../pages/offer-page/offer-page';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import {PrivateRoute, PublicRoute} from '../access-route.tsx/access-route';
+import { PrivateRoute, PublicRoute } from '../access-route.tsx/access-route';
 import { HelmetProvider } from 'react-helmet-async';
 import { Offers } from '../../types';
 
@@ -13,20 +13,20 @@ const authorizationStatus = AuthorizationStatus.Auth;
 
 type AppProps = {
   mockOffers: Offers;
-}
+};
 
-function App({mockOffers}: AppProps): JSX.Element {
+function App({ mockOffers }: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route path={AppRoute.Main}>
-            <Route index element={<Main mockOffers={mockOffers} />} />
+            <Route index element={<MainPage mockOffers={mockOffers} />} />
             <Route
               path={AppRoute.Login}
               element={
                 <PublicRoute status={authorizationStatus}>
-                  <Login />
+                  <LoginPage />
                 </PublicRoute>
               }
             />
@@ -34,13 +34,13 @@ function App({mockOffers}: AppProps): JSX.Element {
               path={AppRoute.Favorites}
               element={
                 <PrivateRoute status={authorizationStatus}>
-                  <Favorites mockOffers={mockOffers} />
+                  <FavoritesPage mockOffers={mockOffers} />
                 </PrivateRoute>
               }
             />
-            <Route path={AppRoute.Offer} element={<Offer />} />
+            <Route path={AppRoute.Offer} element={<OfferPage />} />
           </Route>
-          <Route path='*' element={<NotFound />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>

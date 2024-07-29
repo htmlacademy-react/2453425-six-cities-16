@@ -1,15 +1,17 @@
 import { User } from '../../types';
+import UserAvatar from '../user-avatar/user-avatar';
 
 type OfferHostProps = {
   host: User;
   description: string;
 };
 
-function OfferHost({host, description}: OfferHostProps): JSX.Element {
+function OfferHost({ host, description }: OfferHostProps): JSX.Element {
   return (
     <div className="offer__host">
       <h2 className="offer__host-title">Meet the host</h2>
-      <div className="offer__host-user user">
+      <UserAvatar user={host} isHost />
+      {/* <div className="offer__host-user user">
         <div className={`offer__avatar-wrapper ${host.isPro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper`}>
           <img className="offer__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar" />
         </div>
@@ -22,13 +24,13 @@ function OfferHost({host, description}: OfferHostProps): JSX.Element {
             Pro
           </span>
         }
-      </div>
+      </div> */}
       <div className="offer__description">
+        <p className="offer__text">{description}</p>
         <p className="offer__text">
-          {description}
-        </p>
-        <p className="offer__text">
-          An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+          An independent House, strategically located between Rembrand Square
+          and National Opera, but where the bustle of the city comes to rest in
+          this alley flowery and colorful.
         </p>
       </div>
     </div>

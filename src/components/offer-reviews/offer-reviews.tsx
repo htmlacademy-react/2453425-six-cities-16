@@ -1,17 +1,20 @@
-import CommentsForm from '../comments-form/comments-form';
-import { comments } from '../../mocks/comments';
-import OfferComment from '../offer-comment/offer-comment';
+import ReviewsForm from '../reviews-form/reviews-form';
+import { Comments } from '../../types';
+import ReviewsList from '../reviews-list/reviews-list';
 
-function OfferReviews(): JSX.Element {
-  return(
+type OfferReviewsProps = {
+  comments: Comments;
+};
+
+function OfferReviews({ comments }: OfferReviewsProps): JSX.Element {
+  return (
     <section className="offer__reviews reviews">
-      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
-      <ul className="reviews__list">
-        {
-          comments.map((comment) => <OfferComment key={comment.id} comment={comment} />)
-        }
-      </ul>
-      <CommentsForm />
+      <h2 className="reviews__title">
+        Reviews &middot;
+        <span className="reviews__amount">{comments.length}</span>
+      </h2>
+      <ReviewsList comments={comments} />
+      <ReviewsForm />
     </section>
   );
 }

@@ -8,10 +8,14 @@ type FavoritesMarkButtonProps = {
     height?: number;
   };
   clickHandler?: () => void;
-}
+};
 
-function FavoritesMarkButton({isActive = false, options = {}, clickHandler}: FavoritesMarkButtonProps): JSX.Element {
-  const {classNamePrefix = 'place-card', width = 18, height = 19} = options;
+function FavoritesMarkButton({
+  isActive = false,
+  options = {},
+  clickHandler,
+}: FavoritesMarkButtonProps): JSX.Element {
+  const { classNamePrefix = 'place-card', width = 18, height = 19 } = options;
   const [isButtonActive, setButtonActive] = useState(isActive);
   const onFavoritesMarkButtonClick = () => {
     setButtonActive(!isButtonActive);
@@ -22,13 +26,19 @@ function FavoritesMarkButton({isActive = false, options = {}, clickHandler}: Fav
   const bookmarkButtonClass = isButtonActive
     ? `${classNamePrefix}__bookmark-button ${classNamePrefix}__bookmark-button--active button`
     : `${classNamePrefix}__bookmark-button button`;
-  const bookmarkButtonText = isButtonActive
-    ? 'In bookmarks'
-    : 'To bookmarks';
+  const bookmarkButtonText = isButtonActive ? 'In bookmarks' : 'To bookmarks';
 
-  return(
-    <button className={bookmarkButtonClass} type="button" onClick={onFavoritesMarkButtonClick}>
-      <svg className={`${classNamePrefix}__bookmark-icon`} width={width} height={height}>
+  return (
+    <button
+      className={bookmarkButtonClass}
+      type="button"
+      onClick={onFavoritesMarkButtonClick}
+    >
+      <svg
+        className={`${classNamePrefix}__bookmark-icon`}
+        width={width}
+        height={height}
+      >
         <use xlinkHref="#icon-bookmark"></use>
       </svg>
       <span className="visually-hidden">{bookmarkButtonText}</span>

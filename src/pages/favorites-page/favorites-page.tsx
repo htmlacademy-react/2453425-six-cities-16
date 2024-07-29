@@ -5,9 +5,9 @@ import FavoritesList from '../../components/favorites-list/favorites-list';
 
 type FavoritesProps = {
   mockOffers: Offers;
-}
+};
 
-function Favorites({mockOffers}: FavoritesProps): JSX.Element {
+function FavoritesPage({ mockOffers }: FavoritesProps): JSX.Element {
   const groupedOffers = Object.groupBy(mockOffers, (offer) => offer.city.name);
   return (
     <div className="page">
@@ -26,11 +26,17 @@ function Favorites({mockOffers}: FavoritesProps): JSX.Element {
       </main>
       <footer className="footer container">
         <a className="footer__logo-link" href="main.html">
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
+          <img
+            className="footer__logo"
+            src="img/logo.svg"
+            alt="6 cities logo"
+            width="64"
+            height="33"
+          />
         </a>
       </footer>
     </div>
   );
 }
 
-export default Favorites;
+export default FavoritesPage;
