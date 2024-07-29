@@ -31,8 +31,8 @@ function PlaceCard({
   return (
     <article
       className={`${classNamePrefix}__card place-card`}
-      onMouseEnter={() =>
-        onPointedOfferChange && onPointedOfferChange(offer.id)
+      onMouseEnter={
+        () => onPointedOfferChange && onPointedOfferChange(offer.id)
       }
       onMouseLeave={() => onPointedOfferChange && onPointedOfferChange(null)}
     >
