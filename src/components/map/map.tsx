@@ -37,6 +37,15 @@ function Map({
   const map = useMap(mapRef, city);
 
   useEffect(() => {
+    if (map && city) {
+      map.flyTo(
+        [city.location.latitude, city.location.longitude],
+        city.location.zoom
+      );
+    }
+  }, [map, city]);
+
+  useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
       points.forEach((point) => {
