@@ -21,7 +21,7 @@ function App({ mockOffers }: AppProps): JSX.Element {
       <BrowserRouter>
         <Routes>
           <Route path={AppRoute.Main}>
-            <Route index element={<MainPage mockOffers={mockOffers} />} />
+            <Route index element={<MainPage />} />
             <Route
               path={AppRoute.Login}
               element={
