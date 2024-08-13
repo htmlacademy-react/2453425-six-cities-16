@@ -1,4 +1,4 @@
-import { CITY } from './const';
+import { CITY } from '../const';
 
 declare global {
   interface ObjectConstructor {
@@ -70,10 +70,7 @@ export type Comments = Comment[];
 
 export type CityName = typeof CITY[number];
 
-export type SortOptions = 'Popular' | 'PriceLowToHigh' | 'PriceHighToLow';
-
 export type InitialStateType = {
   currentCityName: CityName;
   offers: Offers;
-  sortOptions: SortOptions;
 };

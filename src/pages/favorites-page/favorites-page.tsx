@@ -1,14 +1,12 @@
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
-import { Offers } from '../../types';
 import FavoritesList from '../../components/favorites-list/favorites-list';
+import { useAppSelector } from '../../hooks';
+import { getOffers } from '../../store/selectors';
 
-type FavoritesProps = {
-  mockOffers: Offers;
-};
-
-function FavoritesPage({ mockOffers }: FavoritesProps): JSX.Element {
-  const groupedOffers = Object.groupBy(mockOffers, (offer) => offer.city.name);
+function FavoritesPage(): JSX.Element {
+  const offers = useAppSelector(getOffers);
+  const groupedOffers = Object.groupBy(offers, (offer) => offer.city.name);
   return (
     <div className="page">
       <Helmet>

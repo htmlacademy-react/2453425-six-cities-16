@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
-import { mockOffers } from './mocks/offers';
 import { store } from './store';
 import { setOffers } from './store/action';
 
@@ -15,7 +14,7 @@ store.dispatch(setOffers());
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App mockOffers={mockOffers} />
+      <App />
     </Provider>
   </React.StrictMode>
 );

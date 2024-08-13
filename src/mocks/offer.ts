@@ -1,4 +1,4 @@
-import { OfferDetails } from '../types';
+import { OfferDetails } from '../types/types';
 
 const mockOfferDetails: OfferDetails[] = [
   {

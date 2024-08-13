@@ -7,15 +7,20 @@ import Map from '../../components/map/map';
 import { useAppSelector } from '../../hooks';
 import { getCurrentCityName, getOffers } from '../../store/selectors';
 import classNames from 'classnames';
+import Sort from '../../components/sort/sort';
+import { SortType } from '../../const';
+import { sort } from '../../util';
 
 
 function MainPage(): JSX.Element {
+  const [sortType, setSortType] = useState(SortType.POPULAR);
+  const [pointedOfferId, setPointedOfferId] = useState<string | null>(null);
+
   const currentCityName = useAppSelector(getCurrentCityName);
   const offers = useAppSelector(getOffers);
   const filteredOffers = offers.filter((offer) => offer.city.name === currentCityName);
   const offersCount = filteredOffers.length;
-
-  const [pointedOfferId, setPointedOfferId] = useState<string | null>(null);
+  const sortedOffers = sort[sortType]([...filteredOffers]);
   const points = filteredOffers.map((offer) => ({
     id: offer.id,
     location: offer.location,
@@ -41,34 +46,9 @@ function MainPage(): JSX.Element {
                     <b className="places__found">
                       {`${offersCount} ${offersCount > 1 ? 'places' : 'place'} to stay in ${currentCityName}`}
                     </b>
-                    <form className="places__sorting" action="#" method="get">
-                      <span className="places__sorting-caption">Sort by</span>
-                      <span className="places__sorting-type" tabIndex={0}>
-                        Popular
-                        <svg className="places__sorting-arrow" width="7" height="4">
-                          <use xlinkHref="#icon-arrow-select"></use>
-                        </svg>
-                      </span>
-                      <ul className="places__options places__options--custom places__options--opened">
-                        <li
-                          className="places__option places__option--active"
-                          tabIndex={0}
-                        >
-                          Popular
-                        </li>
-                        <li className="places__option" tabIndex={0}>
-                          Price: low to high
-                        </li>
-                        <li className="places__option" tabIndex={0}>
-                          Price: high to low
-                        </li>
-                        <li className="places__option" tabIndex={0}>
-                          Top rated first
-                        </li>
-                      </ul>
-                    </form>
+                    <Sort sort={sortType} onSortChange={setSortType}/>
                     <PlacesList
-                      offers={filteredOffers}
+                      offers={sortedOffers}
                       onPointedOfferChange={setPointedOfferId}
                     />
                   </section>

@@ -7,15 +7,10 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { PrivateRoute, PublicRoute } from '../access-route.tsx/access-route';
 import { HelmetProvider } from 'react-helmet-async';
-import { Offers } from '../../types';
 
 const authorizationStatus = AuthorizationStatus.Auth;
 
-type AppProps = {
-  mockOffers: Offers;
-};
-
-function App({ mockOffers }: AppProps): JSX.Element {
+function App(): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -34,7 +29,7 @@ function App({ mockOffers }: AppProps): JSX.Element {
               path={AppRoute.Favorites}
               element={
                 <PrivateRoute status={authorizationStatus}>
-                  <FavoritesPage mockOffers={mockOffers} />
+                  <FavoritesPage/>
                 </PrivateRoute>
               }
             />
