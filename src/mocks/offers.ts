@@ -1,4 +1,4 @@
-import { Offers } from '../types';
+import { Offers } from '../types/types';
 
 const mockOffers: Offers = [
   {
@@ -15,8 +15,8 @@ const mockOffers: Offers = [
       }
     },
     location: {
-      latitude: 48.3909553943508,
-      longitude: 2.85309666406198,
+      latitude: 48.4909553943509,
+      longitude: 2.86309666406197,
       zoom: 8
     },
     isFavorite: false,
@@ -26,6 +26,52 @@ const mockOffers: Offers = [
   },
   {
     id: '6af6f711-c28d-4121-82cd-e0b462a27f01',
+    title: 'Beautiful & luxurious studio at great location',
+    type: 'apartment',
+    price: 200,
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 48.50,
+        longitude: 2.20,
+        zoom: 8
+      }
+    },
+    location: {
+      latitude: 48.3909553943503,
+      longitude: 2.85309666406191,
+      zoom: 8
+    },
+    isFavorite: false,
+    isPremium: true,
+    rating: 5,
+    previewImage: '/img/apartment-01.jpg'
+  },
+  {
+    id: '6af6f711-c28d-4121-82cd-e0b462a27f02',
+    title: 'Beautiful & luxurious studio at great location',
+    type: 'apartment',
+    price: 300,
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 48.50,
+        longitude: 2.20,
+        zoom: 8
+      }
+    },
+    location: {
+      latitude: 48.1909553943508,
+      longitude: 2.81309666406198,
+      zoom: 8
+    },
+    isFavorite: false,
+    isPremium: true,
+    rating: 2,
+    previewImage: '/img/apartment-01.jpg'
+  },
+  {
+    id: '6af6f711-c28d-4121-82cd-e0b462a27f03',
     title: 'Beautiful & luxurious studio at great location',
     type: 'apartment',
     price: 120,
@@ -48,7 +94,7 @@ const mockOffers: Offers = [
     previewImage: '/img/apartment-01.jpg'
   },
   {
-    id: '6af6f711-c28d-4121-82cd-e0b462a27f02',
+    id: '6af6f711-c28d-4121-82cd-e0b462a27f04',
     title: 'Wood and stone place',
     type: 'room',
     price: 80,
@@ -71,7 +117,7 @@ const mockOffers: Offers = [
     previewImage: '/img/apartment-02.jpg'
   },
   {
-    id: '6af6f711-c28d-4121-82cd-e0b462a27f03',
+    id: '6af6f711-c28d-4121-82cd-e0b462a27f05',
     title: 'Canal View Prinsengracht',
     type: 'apartment',
     price: 132,
@@ -94,7 +140,7 @@ const mockOffers: Offers = [
     previewImage: '/img/apartment-03.jpg'
   },
   {
-    id: '6af6f711-c28d-4121-82cd-e0b462a27f04',
+    id: '6af6f711-c28d-4121-82cd-e0b462a27f06',
     title: 'Nice, cozy, warm big bed apartment',
     type: 'apartment',
     price: 180,
@@ -107,8 +153,8 @@ const mockOffers: Offers = [
       }
     },
     location: {
-      latitude: 52.3809553943508,
-      longitude: 4.939309666406198,
+      latitude: 51.2,
+      longitude: 5.5,
       zoom: 8
     },
     isFavorite: false,
@@ -117,7 +163,53 @@ const mockOffers: Offers = [
     previewImage: '/img/room.jpg'
   },
   {
-    id: '6af6f711-c28d-4121-82cd-e0b462a27f05',
+    id: '6af6f711-c28d-4121-82cd-e0b462a27f07',
+    title: 'Nice, cozy, warm big bed apartment',
+    type: 'apartment',
+    price: 100,
+    city: {
+      name: 'Amsterdam',
+      location: {
+        latitude: 52.2223,
+        longitude: 4.5334,
+        zoom: 8
+      }
+    },
+    location: {
+      latitude: 51.1,
+      longitude: 5.3,
+      zoom: 8
+    },
+    isFavorite: false,
+    isPremium: true,
+    rating: 2,
+    previewImage: '/img/room.jpg'
+  },
+  {
+    id: '6af6f711-c28d-4121-82cd-e0b462a27f08',
+    title: 'Nice, cozy, warm big bed apartment',
+    type: 'apartment',
+    price: 200,
+    city: {
+      name: 'Amsterdam',
+      location: {
+        latitude: 52.2223,
+        longitude: 4.5334,
+        zoom: 8
+      }
+    },
+    location: {
+      latitude: 51.6,
+      longitude: 5.7,
+      zoom: 8
+    },
+    isFavorite: false,
+    isPremium: true,
+    rating: 3,
+    previewImage: '/img/room.jpg'
+  },
+  {
+    id: '6af6f711-c28d-4121-82cd-e0b462a27f09',
     title: 'Beautiful & luxurious studio at great location',
     type: 'apartment',
     price: 120,
@@ -140,7 +232,7 @@ const mockOffers: Offers = [
     previewImage: '/img/apartment-01.jpg'
   },
   // {
-  //   id: '6af6f711-c28d-4121-82cd-e0b462a27f06',
+  //   id: '6af6f711-c28d-4121-82cd-e0b462a27f10',
   //   title: 'Beautiful & luxurious studio at great location',
   //   type: 'apartment',
   //   price: 120,

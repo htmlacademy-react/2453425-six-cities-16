@@ -1,5 +1,5 @@
 import ReviewsForm from '../reviews-form/reviews-form';
-import { Comments } from '../../types';
+import { Comments } from '../../types/types';
 import ReviewsList from '../reviews-list/reviews-list';
 
 type OfferReviewsProps = {

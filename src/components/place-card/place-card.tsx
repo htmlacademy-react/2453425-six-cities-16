@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Offer } from '../../types';
+import { Offer } from '../../types/types';
 import { AppRoute } from '../../const';
 import StarsRating from '../stars-rating/stars-rating';
 import PremiumMark from '../premium-mark/premium-mark';

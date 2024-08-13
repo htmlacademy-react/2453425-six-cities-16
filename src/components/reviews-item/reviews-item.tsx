@@ -1,4 +1,4 @@
-import { Comment } from '../../types';
+import { Comment } from '../../types/types';
 import StarsRating from '../stars-rating/stars-rating';
 import UserAvatar from '../user-avatar/user-avatar';
 

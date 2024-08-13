@@ -3,7 +3,7 @@ import { CITY } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { setCurrentCityName } from '../../store/action';
 import { Link } from 'react-router-dom';
-import { CityName } from '../../types';
+import { CityName } from '../../types/types';
 
 type LocationListProps = {
   selectedCity: CityName;
