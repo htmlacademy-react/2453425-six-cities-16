@@ -1,3 +1,5 @@
+import { CITY } from './const';
+
 declare global {
   interface ObjectConstructor {
     groupBy<Item, Key extends PropertyKey>(
@@ -16,6 +18,7 @@ export type City = {
   name: string;
   location: Location;
 };
+
 export type Offer = {
   id: string;
   title: string;
@@ -64,3 +67,13 @@ export type Comment = {
 };
 
 export type Comments = Comment[];
+
+export type CityName = typeof CITY[number];
+
+export type SortOptions = 'Popular' | 'PriceLowToHigh' | 'PriceHighToLow';
+
+export type InitialStateType = {
+  currentCityName: CityName;
+  offers: Offers;
+  sortOptions: SortOptions;
+};
