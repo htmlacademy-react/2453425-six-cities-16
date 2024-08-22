@@ -1,11 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
 import FavoritesList from '../../components/favorites-list/favorites-list';
-import { useAppSelector } from '../../hooks';
-import { getOffers } from '../../store/selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getFavoriteOffers } from '../../store/offers/selectors';
+import { useEffect } from 'react';
+import { fetchFavoriteOffers } from '../../store/offers/thunks';
 
 function FavoritesPage(): JSX.Element {
-  const offers = useAppSelector(getOffers);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchFavoriteOffers());
+  }, [dispatch]);
+  const offers = useAppSelector(getFavoriteOffers);
   const groupedOffers = Object.groupBy(offers, (offer) => offer.city.name);
   return (
     <div className="page">

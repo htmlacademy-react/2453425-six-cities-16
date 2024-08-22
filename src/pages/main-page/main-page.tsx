@@ -5,26 +5,38 @@ import PlacesList from '../../components/places-list/places-list';
 import { useState } from 'react';
 import Map from '../../components/map/map';
 import { useAppSelector } from '../../hooks';
-import { getCurrentCityName, getOffers } from '../../store/selectors';
+import {
+  getOffers,
+  getCurrentCityName,
+  getAllOffersStatus,
+} from '../../store/offers/selectors';
 import classNames from 'classnames';
 import Sort from '../../components/sort/sort';
-import { SortType } from '../../const';
+import { RequestStatus, SortType } from '../../const';
 import { sort } from '../../util';
-
+import Loader from '../../components/loader/loader';
 
 function MainPage(): JSX.Element {
   const [sortType, setSortType] = useState(SortType.POPULAR);
   const [pointedOfferId, setPointedOfferId] = useState<string | null>(null);
 
-  const currentCityName = useAppSelector(getCurrentCityName);
+  const offersStatus = useAppSelector(getAllOffersStatus);
+
   const offers = useAppSelector(getOffers);
-  const filteredOffers = offers.filter((offer) => offer.city.name === currentCityName);
+  const currentCityName = useAppSelector(getCurrentCityName);
+  const filteredOffers = offers.filter(
+    (offer) => offer.city.name === currentCityName
+  );
   const offersCount = filteredOffers.length;
   const sortedOffers = sort[sortType]([...filteredOffers]);
   const points = filteredOffers.map((offer) => ({
     id: offer.id,
     location: offer.location,
   }));
+
+  if (offersStatus === RequestStatus.Loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="page page--gray page--main">
@@ -33,47 +45,52 @@ function MainPage(): JSX.Element {
       </Helmet>
 
       <Header />
-      <main className={classNames('page__main', 'page__main--index', {'page__main--index-empty': offersCount === 0})}>
+      <main
+        className={classNames('page__main', 'page__main--index', {
+          'page__main--index-empty': offersCount === 0,
+        })}
+      >
         <h1 className="visually-hidden">Cities</h1>
-        <LocationsList selectedCity={currentCityName}/>
+        <LocationsList selectedCity={currentCityName} />
         <div className="cities">
-          {
-            offersCount
-              ? (
-                <div className="cities__places-container container">
-                  <section className="cities__places places">
-                    <h2 className="visually-hidden">Places</h2>
-                    <b className="places__found">
-                      {`${offersCount} ${offersCount > 1 ? 'places' : 'place'} to stay in ${currentCityName}`}
-                    </b>
-                    <Sort sort={sortType} onSortChange={setSortType}/>
-                    <PlacesList
-                      offers={sortedOffers}
-                      onPointedOfferChange={setPointedOfferId}
-                    />
-                  </section>
-                  <div className="cities__right-section">
-                    <Map
-                      city={filteredOffers[0].city}
-                      points={points}
-                      selectedPointId={pointedOfferId}
-                      classNamePrefix="cities"
-                    />
-                  </div>
+          {offersCount ? (
+            <div className="cities__places-container container">
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">
+                  {`${offersCount} ${
+                    offersCount > 1 ? 'places' : 'place'
+                  } to stay in ${currentCityName}`}
+                </b>
+                <Sort sort={sortType} onSortChange={setSortType} />
+                <PlacesList
+                  offers={sortedOffers}
+                  onPointedOfferChange={setPointedOfferId}
+                />
+              </section>
+              <div className="cities__right-section">
+                <Map
+                  city={filteredOffers[0].city}
+                  points={points}
+                  selectedPointId={pointedOfferId}
+                  classNamePrefix="cities"
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="cities__places-container cities__places-container--empty container">
+              <section className="cities__no-places">
+                <div className="cities__status-wrapper tabs__content">
+                  <b className="cities__status">No places to stay available</b>
+                  <p className="cities__status-description">
+                    We could not find any property available at the moment in
+                    Dusseldorf
+                  </p>
                 </div>
-              )
-              : (
-                <div className="cities__places-container cities__places-container--empty container">
-                  <section className="cities__no-places">
-                    <div className="cities__status-wrapper tabs__content">
-                      <b className="cities__status">No places to stay available</b>
-                      <p className="cities__status-description">We could not find any property available at the moment in Dusseldorf</p>
-                    </div>
-                  </section>
-                  <div className="cities__right-section"></div>
-                </div>
-              )
-          }
+              </section>
+              <div className="cities__right-section"></div>
+            </div>
+          )}
         </div>
       </main>
     </div>

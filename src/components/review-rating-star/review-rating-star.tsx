@@ -1,14 +1,35 @@
 type ReviewRatingStarProps = {
   rating: {
-    title: string; mark: number;
+    title: string;
+    mark: number;
   };
+  onRatingChange: React.Dispatch<React.SetStateAction<number>>;
+  stars: number;
 };
 
-function ReviewRatingStar({rating: {title, mark}}: ReviewRatingStarProps): JSX.Element {
+function ReviewRatingStar({
+  rating: { title, mark },
+  onRatingChange,
+  stars,
+}: ReviewRatingStarProps): JSX.Element {
   return (
     <>
-      <input className="form__rating-input visually-hidden" name="rating" value={mark} id={`${mark}-stars`} type="radio" />
-      <label htmlFor={`${mark}-stars`} className="reviews__rating-label form__rating-label" title={title}>
+      <input
+        className="form__rating-input visually-hidden"
+        name="rating"
+        value={mark}
+        id={`${mark}-stars`}
+        type="radio"
+        onChange={(event) => {
+          onRatingChange(+event.target.value);
+        }}
+        checked={mark === stars}
+      />
+      <label
+        htmlFor={`${mark}-stars`}
+        className="reviews__rating-label form__rating-label"
+        title={title}
+      >
         <svg className="form__star-image" width="37" height="33">
           <use xlinkHref="#icon-star"></use>
         </svg>

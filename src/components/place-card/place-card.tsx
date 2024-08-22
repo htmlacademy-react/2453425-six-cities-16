@@ -31,9 +31,7 @@ function PlaceCard({
   return (
     <article
       className={`${classNamePrefix}__card place-card`}
-      onMouseEnter={
-        () => onPointedOfferChange && onPointedOfferChange(offer.id)
-      }
+      onMouseEnter={() => onPointedOfferChange && onPointedOfferChange(offer.id)}
       onMouseLeave={() => onPointedOfferChange && onPointedOfferChange(null)}
     >
       {offer.isPremium && <PremiumMark />}
@@ -55,7 +53,7 @@ function PlaceCard({
       <div className={`${classNamePrefix}__card-info place-card__info`}>
         <div className="place-card__price-wrapper">
           <Price price={offer.price} />
-          <FavoritesMarkButton isActive={offer.isFavorite} />
+          <FavoritesMarkButton id={offer.id} isActive={offer.isFavorite} />
         </div>
         <StarsRating rating={offer.rating} />
         <h2 className="place-card__name">

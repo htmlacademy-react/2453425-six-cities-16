@@ -40,6 +40,11 @@ export type User = {
   isPro: boolean;
 };
 
+export type AuthInfo = User & {
+  email: string;
+  token: string;
+};
+
 export type OfferDetails = {
   id: string;
   title: string;
@@ -68,9 +73,4 @@ export type Comment = {
 
 export type Comments = Comment[];
 
-export type CityName = typeof CITY[number];
-
-export type InitialStateType = {
-  currentCityName: CityName;
-  offers: Offers;
-};
+export type CityName = (typeof CITY)[number];
