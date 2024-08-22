@@ -1,13 +1,18 @@
 import { Navigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { getUserStatus } from '../../store/user/selectors';
 
 type AccessRouteProps = {
   children: JSX.Element;
-  status: AuthorizationStatus;
-}
+};
 
-function createAccessRoute(statusToCheck: AuthorizationStatus, fallbackPath: AppRoute) {
-  return function AccessRoute({children, status} : AccessRouteProps) {
+function createAccessRoute(
+  statusToCheck: AuthorizationStatus,
+  fallbackPath: AppRoute
+) {
+  return function AccessRoute({ children }: AccessRouteProps) {
+    const status = useAppSelector(getUserStatus);
     switch (status) {
       case statusToCheck:
         return children;
@@ -19,7 +24,13 @@ function createAccessRoute(statusToCheck: AuthorizationStatus, fallbackPath: App
   };
 }
 
-const PrivateRoute = createAccessRoute(AuthorizationStatus.Auth, AppRoute.Login);
-const PublicRoute = createAccessRoute(AuthorizationStatus.NoAuth, AppRoute.Main);
+const PrivateRoute = createAccessRoute(
+  AuthorizationStatus.Auth,
+  AppRoute.Login
+);
+const PublicRoute = createAccessRoute(
+  AuthorizationStatus.NoAuth,
+  AppRoute.Main
+);
 
-export {PrivateRoute, PublicRoute};
+export { PrivateRoute, PublicRoute };

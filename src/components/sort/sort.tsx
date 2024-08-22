@@ -5,16 +5,18 @@ import { SortType } from '../../const';
 type SortProps = {
   sort: string;
   onSortChange: React.Dispatch<React.SetStateAction<string>>;
-}
+};
 
-function Sort({sort, onSortChange}: SortProps): JSX.Element {
+function Sort({ sort, onSortChange }: SortProps): JSX.Element {
   const [isActive, setIsActive] = useState<boolean>(false);
 
   const onSortClick = () => {
     setIsActive(!isActive);
   };
 
-  const onSortOptionClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  const onSortOptionClick = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
     const targetElement = event.target as HTMLElement;
     if (targetElement.classList.contains('places__option')) {
       onSortChange(targetElement.innerText);
@@ -31,7 +33,10 @@ function Sort({sort, onSortChange}: SortProps): JSX.Element {
 
   const onDocumentClick = (event: MouseEvent) => {
     const tartgetElement = event.target as HTMLElement;
-    if (tartgetElement.closest('.places__options') || tartgetElement.closest('.places__sorting-type')) {
+    if (
+      tartgetElement.closest('.places__options') ||
+      tartgetElement.closest('.places__sorting-type')
+    ) {
       return;
     }
     event.preventDefault();
@@ -59,11 +64,18 @@ function Sort({sort, onSortChange}: SortProps): JSX.Element {
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
-      <ul className={classNames('places__options places__options--custom', {'places__options--opened': isActive})} onClick={onSortOptionClick}>
+      <ul
+        className={classNames('places__options places__options--custom', {
+          'places__options--opened': isActive,
+        })}
+        onClick={onSortOptionClick}
+      >
         {Object.values(SortType).map((sortItem) => (
           <li
             key={sortItem}
-            className={classNames('places__option', {'places__option--active': (sortItem === sort)})}
+            className={classNames('places__option', {
+              'places__option--active': sortItem === sort,
+            })}
             tabIndex={0}
           >
             {sortItem}

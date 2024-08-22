@@ -4,11 +4,9 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import { PrivateRoute, PublicRoute } from '../access-route.tsx/access-route';
 import { HelmetProvider } from 'react-helmet-async';
-
-const authorizationStatus = AuthorizationStatus.Auth;
 
 function App(): JSX.Element {
   return (
@@ -20,7 +18,7 @@ function App(): JSX.Element {
             <Route
               path={AppRoute.Login}
               element={
-                <PublicRoute status={authorizationStatus}>
+                <PublicRoute>
                   <LoginPage />
                 </PublicRoute>
               }
@@ -28,8 +26,8 @@ function App(): JSX.Element {
             <Route
               path={AppRoute.Favorites}
               element={
-                <PrivateRoute status={authorizationStatus}>
-                  <FavoritesPage/>
+                <PrivateRoute>
+                  <FavoritesPage />
                 </PrivateRoute>
               }
             />

@@ -1,7 +1,24 @@
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header/header';
+import React, { useRef } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { login } from '../../store/user/thunks';
 
 function LoginPage(): JSX.Element {
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const dispatch = useAppDispatch();
+  const onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const email = emailRef.current?.value || '';
+    const password = passwordRef.current?.value || '';
+    dispatch(
+      login({
+        email,
+        password,
+      })
+    );
+  };
   return (
     <div className="page page--gray page--login">
       <Helmet>
@@ -12,10 +29,16 @@ function LoginPage(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post">
+            <form
+              onSubmit={onFormSubmit}
+              className="login__form form"
+              action="#"
+              method="post"
+            >
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
+                  ref={emailRef}
                   className="login__input form__input"
                   type="email"
                   name="email"
@@ -26,6 +49,7 @@ function LoginPage(): JSX.Element {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
                 <input
+                  ref={passwordRef}
                   className="login__input form__input"
                   type="password"
                   name="password"

@@ -1,15 +1,15 @@
 import classNames from 'classnames';
 import { CITY } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { setCurrentCityName } from '../../store/action';
 import { Link } from 'react-router-dom';
 import { CityName } from '../../types/types';
+import { setCurrentCityName } from '../../store/offers/offers-slice';
 
 type LocationListProps = {
   selectedCity: CityName;
-}
+};
 
-function LocationsList({selectedCity}: LocationListProps): JSX.Element {
+function LocationsList({ selectedCity }: LocationListProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const onCityClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -20,12 +20,11 @@ function LocationsList({selectedCity}: LocationListProps): JSX.Element {
 
       CITY.some((city) => {
         if (city === selectCityName) {
-          dispatch(setCurrentCityName({city}));
+          dispatch(setCurrentCityName(city));
         }
       });
     }
   };
-
 
   return (
     <div className="tabs" onClick={onCityClick}>
@@ -36,7 +35,12 @@ function LocationsList({selectedCity}: LocationListProps): JSX.Element {
 
             return (
               <li key={city} className="locations__item">
-                <Link className={classNames('locations__item-link', 'tabs__item', {'tabs__item--active': isSelectedCity})} to="#">
+                <Link
+                  className={classNames('locations__item-link', 'tabs__item', {
+                    'tabs__item--active': isSelectedCity,
+                  })}
+                  to="#"
+                >
                   <span>{city}</span>
                 </Link>
               </li>

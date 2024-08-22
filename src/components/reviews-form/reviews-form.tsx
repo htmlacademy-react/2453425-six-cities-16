@@ -1,48 +1,60 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReviewRatingStars from '../review-rating-stars/review-rating-stars';
-
-type ReviewsFormState = {
-  rating: null | number;
-  review: string;
-};
-const INITIAL_REVIEWS_FORM_STATE: ReviewsFormState = {
-  rating: null,
-  review: '',
-};
+import { useAppDispatch } from '../../hooks';
+import { useParams } from 'react-router-dom';
+import { postReview } from '../../store/offers/thunks';
+import { updateReviews } from '../../store/offers/offers-slice';
 
 function ReviewsForm(): JSX.Element {
-  const [formState, setFormState] = useState(INITIAL_REVIEWS_FORM_STATE);
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState('');
+  const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(true);
 
-  function handleTextChange(event: React.ChangeEvent<HTMLFormElement>) {
-    const { name, value } = event.target;
-
-    switch (name) {
-      case 'rating':
-        setFormState({ ...formState, rating: +value });
-        return;
-      case 'review':
-        setFormState({ ...formState, review: String(value) });
+  useEffect(() => {
+    if (rating && review.length > 50 && review.length < 300) {
+      setIsSubmitButtonDisabled(false);
+      return;
     }
-  }
+    setIsSubmitButtonDisabled(true);
+  }, [rating, review]);
 
   return (
     <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        if (!id) {
+          return;
+        }
+        setIsSubmitButtonDisabled(true);
+        dispatch(postReview({ id, rating, comment: review }))
+          .unwrap()
+          .then(
+            (result) => {
+              dispatch(updateReviews(result));
+              setRating(0);
+              setReview('');
+            },
+            () => setIsSubmitButtonDisabled(false)
+          );
+      }}
       className="reviews__form form"
       action="#"
       method="post"
-      onChange={handleTextChange}
     >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
-      <ReviewRatingStars />
+      <ReviewRatingStars onRatingChange={setRating} stars={rating} />
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-      >
-      </textarea>
+        onChange={(event) => setReview(event.target.value)}
+        value={review}
+      />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set{' '}
@@ -52,7 +64,7 @@ function ReviewsForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={isSubmitButtonDisabled}
         >
           Submit
         </button>
