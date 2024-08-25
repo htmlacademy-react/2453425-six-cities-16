@@ -1,15 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CITY, RequestStatus } from '../../const';
+import { CITIES, NameSpace, RequestStatus, SortType } from '../../const';
 import {
   CityName,
-  Comment,
   Comments,
   Offer,
   OfferDetails,
   Offers,
 } from '../../types/types';
-import { fetchAllOffers, fetchFavoriteOffers } from './thunks';
 import {
+  fetchAllOffers,
+  fetchFavoriteOffers,
+  postReview,
   fetchNearOffers,
   fetchOfferDetails,
   fetchOfferReviews,
@@ -21,13 +22,14 @@ type OffersState = {
   favoriteOffersStatus: RequestStatus;
   favoriteOffers: Offers;
   currentCityName: CityName;
-
+  currentSort: SortType;
   offerDetailsStatus: RequestStatus;
   offerDetails: OfferDetails | null;
   reviewsStatus: RequestStatus;
   reviews: Comments;
   nearOffersStatus: RequestStatus;
   nearOffers: Offers;
+  postReviewStatus: RequestStatus;
 };
 
 const initialState: OffersState = {
@@ -35,18 +37,19 @@ const initialState: OffersState = {
   allOffers: [],
   favoriteOffersStatus: RequestStatus.Idle,
   favoriteOffers: [],
-  currentCityName: CITY[0],
-
+  currentCityName: CITIES[0],
+  currentSort: SortType.Popular,
   offerDetailsStatus: RequestStatus.Idle,
   offerDetails: null,
   reviewsStatus: RequestStatus.Idle,
   reviews: [],
   nearOffersStatus: RequestStatus.Idle,
   nearOffers: [],
+  postReviewStatus: RequestStatus.Idle,
 };
 
 export const offersSlice = createSlice({
-  name: 'offers',
+  name: NameSpace.Offers,
   initialState,
   extraReducers: (builder) =>
     builder
@@ -70,7 +73,6 @@ export const offersSlice = createSlice({
       .addCase(fetchFavoriteOffers.rejected, (state) => {
         state.favoriteOffersStatus = RequestStatus.Failed;
       })
-
       .addCase(fetchOfferDetails.pending, (state) => {
         state.offerDetailsStatus = RequestStatus.Loading;
       })
@@ -100,11 +102,24 @@ export const offersSlice = createSlice({
       })
       .addCase(fetchNearOffers.rejected, (state) => {
         state.nearOffersStatus = RequestStatus.Failed;
+      })
+      .addCase(postReview.rejected, (state) => {
+        state.postReviewStatus = RequestStatus.Failed;
+      })
+      .addCase(postReview.pending, (state) => {
+        state.postReviewStatus = RequestStatus.Loading;
+      })
+      .addCase(postReview.fulfilled, (state, action) => {
+        state.postReviewStatus = RequestStatus.Success;
+        state.reviews = [...state.reviews, action.payload];
       }),
   reducers: {
     setCurrentCityName(state, action: PayloadAction<CityName>) {
       const city = action.payload;
       state.currentCityName = city;
+    },
+    setCurrentSort(state, action: PayloadAction<SortType>) {
+      state.currentSort = action.payload;
     },
     setOfferFavorite(state, action: PayloadAction<Offer>) {
       const updatedOffer = action.payload;
@@ -128,7 +143,6 @@ export const offersSlice = createSlice({
         (offer) => offer.id !== updatedOffer.id
       );
     },
-
     setDetailedOfferFavorite(state, action: PayloadAction<Offer>) {
       const updatedOffer = action.payload;
       if (state.offerDetails) {
@@ -141,8 +155,8 @@ export const offersSlice = createSlice({
         oldNearOffer.isFavorite = updatedOffer.isFavorite;
       }
     },
-    updateReviews(state, action: PayloadAction<Comment>) {
-      state.reviews = [...state.reviews, action.payload];
+    resetPostReviewStatus(state) {
+      state.postReviewStatus = RequestStatus.Idle;
     },
   },
 });
@@ -151,5 +165,6 @@ export const {
   setCurrentCityName,
   setOfferFavorite,
   setDetailedOfferFavorite,
-  updateReviews,
+  resetPostReviewStatus,
+  setCurrentSort,
 } = offersSlice.actions;

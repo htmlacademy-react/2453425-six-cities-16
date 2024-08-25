@@ -1,16 +1,17 @@
 import { Link } from 'react-router-dom';
-import { CityName, Offer } from '../../types/types';
 import PlaceCard from '../place-card/place-card';
+import { CityName, GroupedOffers } from '../../types/types';
 import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { setCurrentCityName } from '../../store/offers/offers-slice';
+import { setCurrentCityName } from '../../store/offers-slice/offers-slice';
 
 type FavoritesListProps = {
-  groupedOffers: Record<string, Offer[]>;
+  groupedOffers: GroupedOffers;
 };
 
 function FavoritesList({ groupedOffers }: FavoritesListProps): JSX.Element {
   const dispatch = useAppDispatch();
+
   return (
     <ul className="favorites__list">
       {Object.keys(groupedOffers).map((city) => (

@@ -1,44 +1,40 @@
 import { useEffect, useState } from 'react';
-import ReviewRatingStars from '../review-rating-stars/review-rating-stars';
-import { useAppDispatch } from '../../hooks';
 import { useParams } from 'react-router-dom';
-import { postReview } from '../../store/offers/thunks';
-import { updateReviews } from '../../store/offers/offers-slice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import ReviewRatingStars from '../review-rating-stars/review-rating-stars';
+import { postReview } from '../../store/offers-slice/thunks';
+import { getPostReviewStatus } from '../../store/offers-slice/selectors';
+import { RequestStatus } from '../../const';
 
 function ReviewsForm(): JSX.Element {
-  const dispatch = useAppDispatch();
   const { id } = useParams();
+  const postReviewStatus = useAppSelector(getPostReviewStatus);
+  const isPostReviewSending = postReviewStatus === RequestStatus.Loading;
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
-  const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(true);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (rating && review.length > 50 && review.length < 300) {
-      setIsSubmitButtonDisabled(false);
+    if (postReviewStatus === RequestStatus.Success) {
+      setRating(0);
+      setReview('');
+    }
+  }, [postReviewStatus]);
+
+  const isSubmitButtonDisabled =
+    !rating || review.length < 50 || review.length > 300 || isPostReviewSending;
+
+  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    if (!id) {
       return;
     }
-    setIsSubmitButtonDisabled(true);
-  }, [rating, review]);
+    dispatch(postReview({ id, rating, comment: review }));
+  };
 
   return (
     <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        if (!id) {
-          return;
-        }
-        setIsSubmitButtonDisabled(true);
-        dispatch(postReview({ id, rating, comment: review }))
-          .unwrap()
-          .then(
-            (result) => {
-              dispatch(updateReviews(result));
-              setRating(0);
-              setReview('');
-            },
-            () => setIsSubmitButtonDisabled(false)
-          );
-      }}
+      onSubmit={handleFormSubmit}
       className="reviews__form form"
       action="#"
       method="post"
@@ -46,7 +42,12 @@ function ReviewsForm(): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
-      <ReviewRatingStars onRatingChange={setRating} stars={rating} />
+
+      <ReviewRatingStars
+        onRatingChange={setRating}
+        stars={rating}
+        isDisabled={isPostReviewSending}
+      />
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
@@ -54,6 +55,7 @@ function ReviewsForm(): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={(event) => setReview(event.target.value)}
         value={review}
+        disabled={isPostReviewSending}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">

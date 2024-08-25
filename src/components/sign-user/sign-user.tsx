@@ -1,11 +1,19 @@
-import { Link } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus, Endpoint } from '../../const';
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { logout } from '../../store/user/thunks';
-import { getUserEmail, getUserStatus } from '../../store/user/selectors';
-import { getFavoriteOffers } from '../../store/offers/selectors';
-import { fetchFavoriteOffers } from '../../store/offers/thunks';
+import { fetchFavoriteOffers } from '../../store/offers-slice/thunks';
+import {
+  getFavoriteOffers,
+  getFavoriteOffersStatus,
+} from '../../store/offers-slice/selectors';
+import { logout } from '../../store/user-slice/thunks';
+import { getUserEmail, getUserStatus } from '../../store/user-slice/selectors';
+import {
+  AppRoute,
+  AuthorizationStatus,
+  Endpoint,
+  RequestStatus,
+} from '../../const';
 
 function SignIn(): JSX.Element {
   return (
@@ -22,13 +30,19 @@ function SignIn(): JSX.Element {
 }
 
 function SignOut(): JSX.Element {
-  const dispatch = useAppDispatch();
+  const favoritesStatus = useAppSelector(getFavoriteOffersStatus);
   const email = useAppSelector(getUserEmail);
   const favoritesCount = useAppSelector(getFavoriteOffers).length;
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchFavoriteOffers());
-  }, [dispatch]);
+    if (
+      favoritesStatus === RequestStatus.Idle ||
+      favoritesStatus === RequestStatus.Failed
+    ) {
+      dispatch(fetchFavoriteOffers());
+    }
+  }, [dispatch, favoritesStatus]);
 
   const handleLogoutClick = (
     event: React.MouseEvent<HTMLElement, MouseEvent>

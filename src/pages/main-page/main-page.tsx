@@ -1,42 +1,42 @@
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import classNames from 'classnames';
+import { useAppSelector } from '../../hooks';
 import Header from '../../components/header/header';
 import LocationsList from '../../components/locations-list/locations-list';
 import PlacesList from '../../components/places-list/places-list';
-import { useState } from 'react';
 import Map from '../../components/map/map';
-import { useAppSelector } from '../../hooks';
+import Sort from '../../components/sort/sort';
+import Loader from '../../components/loader/loader';
 import {
   getOffers,
   getCurrentCityName,
   getAllOffersStatus,
-} from '../../store/offers/selectors';
-import classNames from 'classnames';
-import Sort from '../../components/sort/sort';
-import { RequestStatus, SortType } from '../../const';
+  getCurrentSort,
+} from '../../store/offers-slice/selectors';
 import { sort } from '../../util';
-import Loader from '../../components/loader/loader';
+import { RequestStatus } from '../../const';
 
 function MainPage(): JSX.Element {
-  const [sortType, setSortType] = useState(SortType.POPULAR);
   const [pointedOfferId, setPointedOfferId] = useState<string | null>(null);
-
+  const currentSortType = useAppSelector(getCurrentSort);
   const offersStatus = useAppSelector(getAllOffersStatus);
-
   const offers = useAppSelector(getOffers);
   const currentCityName = useAppSelector(getCurrentCityName);
-  const filteredOffers = offers.filter(
-    (offer) => offer.city.name === currentCityName
-  );
-  const offersCount = filteredOffers.length;
-  const sortedOffers = sort[sortType]([...filteredOffers]);
-  const points = filteredOffers.map((offer) => ({
-    id: offer.id,
-    location: offer.location,
-  }));
 
   if (offersStatus === RequestStatus.Loading) {
     return <Loader />;
   }
+
+  const filteredOffers = offers.filter(
+    (offer) => offer.city.name === currentCityName
+  );
+  const sortedOffers = sort[currentSortType]([...filteredOffers]);
+  const offersCount = filteredOffers.length;
+  const points = filteredOffers.map((offer) => ({
+    id: offer.id,
+    location: offer.location,
+  }));
 
   return (
     <div className="page page--gray page--main">
@@ -62,7 +62,7 @@ function MainPage(): JSX.Element {
                     offersCount > 1 ? 'places' : 'place'
                   } to stay in ${currentCityName}`}
                 </b>
-                <Sort sort={sortType} onSortChange={setSortType} />
+                <Sort currentSortType={currentSortType} />
                 <PlacesList
                   offers={sortedOffers}
                   onPointedOfferChange={setPointedOfferId}
@@ -83,8 +83,8 @@ function MainPage(): JSX.Element {
                 <div className="cities__status-wrapper tabs__content">
                   <b className="cities__status">No places to stay available</b>
                   <p className="cities__status-description">
-                    We could not find any property available at the moment in
-                    Dusseldorf
+                    We could not find any property available at the moment in{' '}
+                    {currentCityName}
                   </p>
                 </div>
               </section>

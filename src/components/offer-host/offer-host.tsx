@@ -1,5 +1,5 @@
-import { User } from '../../types/types';
 import UserAvatar from '../user-avatar/user-avatar';
+import { User } from '../../types/types';
 
 type OfferHostProps = {
   host: User;
@@ -13,11 +13,6 @@ function OfferHost({ host, description }: OfferHostProps): JSX.Element {
       <UserAvatar user={host} isHost />
       <div className="offer__description">
         <p className="offer__text">{description}</p>
-        <p className="offer__text">
-          An independent House, strategically located between Rembrand Square
-          and National Opera, but where the bustle of the city comes to rest in
-          this alley flowery and colorful.
-        </p>
       </div>
     </div>
   );

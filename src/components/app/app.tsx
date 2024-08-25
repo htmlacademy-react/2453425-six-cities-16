@@ -4,11 +4,20 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import LoginPage from '../../pages/login-page/login-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { PrivateRoute, PublicRoute } from '../access-route.tsx/access-route';
 import { HelmetProvider } from 'react-helmet-async';
+import { useAppSelector } from '../../hooks';
+import { getUserStatus } from '../../store/user-slice/selectors';
+import Loader from '../loader/loader';
 
 function App(): JSX.Element {
+  const authStatus = useAppSelector(getUserStatus);
+
+  if (authStatus === AuthorizationStatus.Unknown) {
+    return <Loader />;
+  }
+
   return (
     <HelmetProvider>
       <BrowserRouter>

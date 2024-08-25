@@ -15,11 +15,20 @@ export const sortCommentsByDate = (comments: Comments) => {
 };
 
 export const sort = {
-  [SortType.POPULAR]: (offers: Offers) => offers,
-  [SortType.PRICE_HIGH_TO_LOW]: (offers: Offers) =>
+  [SortType.Popular]: (offers: Offers) => offers,
+  [SortType.PriceHighToLow]: (offers: Offers) =>
     offers.sort((offerA, offerB) => offerB.price - offerA.price),
-  [SortType.PRICE_LOW_TO_HIGH]: (offers: Offers) =>
+  [SortType.PriceLowToHigh]: (offers: Offers) =>
     offers.sort((offerA, offerB) => offerA.price - offerB.price),
-  [SortType.TOP_RATED_FIRST]: (offers: Offers) =>
+  [SortType.TopRatedFirst]: (offers: Offers) =>
     offers.sort((offerA, offerB) => offerB.rating - offerA.rating),
 };
+
+export const getRandomArrayItem = <T>(array: readonly T[]): T => {
+  const randomInteger = Math.floor(Math.random() * array.length);
+  return array[randomInteger];
+};
+
+export function getRatingPercent(rating: number, total: number = 5): number {
+  return (Math.round(rating) / total) * 100;
+}

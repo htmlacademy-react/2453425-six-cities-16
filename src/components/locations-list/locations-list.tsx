@@ -1,9 +1,9 @@
 import classNames from 'classnames';
-import { CITY } from '../../const';
-import { useAppDispatch } from '../../hooks';
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import { setCurrentCityName } from '../../store/offers-slice/offers-slice';
+import { CITIES } from '../../const';
 import { CityName } from '../../types/types';
-import { setCurrentCityName } from '../../store/offers/offers-slice';
 
 type LocationListProps = {
   selectedCity: CityName;
@@ -12,13 +12,16 @@ type LocationListProps = {
 function LocationsList({ selectedCity }: LocationListProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const onCityClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  const handleCityClick = (
+    event: React.MouseEvent<HTMLElement, MouseEvent>
+  ) => {
     event.preventDefault();
     const targetElement = event.target as HTMLElement;
+
     if (targetElement.closest('.locations__item')) {
       const selectCityName = targetElement.innerText;
 
-      CITY.some((city) => {
+      CITIES.some((city) => {
         if (city === selectCityName) {
           dispatch(setCurrentCityName(city));
         }
@@ -27,12 +30,11 @@ function LocationsList({ selectedCity }: LocationListProps): JSX.Element {
   };
 
   return (
-    <div className="tabs" onClick={onCityClick}>
+    <div className="tabs" onClick={handleCityClick}>
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {CITY.map((city) => {
+          {CITIES.map((city) => {
             const isSelectedCity = city === selectedCity;
-
             return (
               <li key={city} className="locations__item">
                 <Link

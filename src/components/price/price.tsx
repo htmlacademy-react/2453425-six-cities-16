@@ -10,7 +10,7 @@ function Price({
   return (
     <div className={`${classNamePrefix}__price`}>
       <b className={`${classNamePrefix}__price-value`}>&euro;{price}</b>
-      <span className={`${classNamePrefix}__price-text`}> /&nbsp;night</span>
+      <span className={`${classNamePrefix}__price-text`}> &nbsp;night</span>
     </div>
   );
 }
