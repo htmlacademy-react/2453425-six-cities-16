@@ -17,6 +17,7 @@ export const fetchAllOffers = createAsyncThunk<
   const response = await api.get<Offers>(Endpoint.Offers);
   return response.data;
 });
+
 export const fetchFavoriteOffers = createAsyncThunk<
   Offers,
   undefined,
@@ -34,6 +35,7 @@ export const fetchOfferDetails = createAsyncThunk<
   const response = await api.get<OfferDetails>(`${Endpoint.Offers}/${id}`);
   return response.data;
 });
+
 export const fetchOfferReviews = createAsyncThunk<
   Comments,
   { id: string | undefined },
@@ -42,6 +44,7 @@ export const fetchOfferReviews = createAsyncThunk<
   const response = await api.get<Comments>(`${Endpoint.Comments}/${id}`);
   return response.data;
 });
+
 export const fetchNearOffers = createAsyncThunk<
   Offers,
   { id: string | undefined },
@@ -50,6 +53,7 @@ export const fetchNearOffers = createAsyncThunk<
   const response = await api.get<Offers>(`${Endpoint.Offers}/${id}/nearby`);
   return response.data;
 });
+
 export const postFavoriteOffer = createAsyncThunk<
   Offer,
   { id: string | undefined; isFavorite: boolean },
@@ -60,6 +64,7 @@ export const postFavoriteOffer = createAsyncThunk<
   );
   return response.data;
 });
+
 export const postReview = createAsyncThunk<
   Comment,
   { comment: string; rating: number; id: string },

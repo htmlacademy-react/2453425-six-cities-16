@@ -1,7 +1,9 @@
-import { Helmet } from 'react-helmet-async';
-import Header from '../../components/header/header';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import NotFoundPage from '../not-found-page/not-found-page';
+import Header from '../../components/header/header';
 import OfferGallery from '../../components/offer-gallery/offer-gallery';
 import StarsRating from '../../components/stars-rating/stars-rating';
 import OfferInside from '../../components/offer-inside/offer-inside';
@@ -13,21 +15,19 @@ import OfferFeatures from '../../components/offer-features/offer-features';
 import Price from '../../components/price/price';
 import NearPlaces from '../../components/near-places/near-places';
 import Map from '../../components/map/map';
+import Loader from '../../components/loader/loader';
 import {
   fetchNearOffers,
   fetchOfferDetails,
   fetchOfferReviews,
-} from '../../store/offers/thunks';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+} from '../../store/offers-slice/thunks';
 import {
   getNearOffers,
   getOffer,
   getOfferDetailsStatus,
   getReviews,
-} from '../../store/offers/selectors';
-import { useEffect } from 'react';
+} from '../../store/offers-slice/selectors';
 import { RequestStatus } from '../../const';
-import Loader from '../../components/loader/loader';
 
 function OfferPage(): JSX.Element {
   const { id } = useParams();
@@ -97,7 +97,7 @@ function OfferPage(): JSX.Element {
 
               <OfferFeatures
                 type={offer.type}
-                bedrooms={offer.bedrooms}
+                bedroomsCount={offer.bedrooms}
                 maxAdults={offer.maxAdults}
               />
 

@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import { Offer } from '../../types/types';
-import { AppRoute } from '../../const';
 import StarsRating from '../stars-rating/stars-rating';
 import PremiumMark from '../premium-mark/premium-mark';
 import FavoritesMarkButton from '../favorites-mark-button/favorites-mark-button';
-import { capitalize } from '../../util';
 import Price from '../price/price';
+import { AppRoute } from '../../const';
+import { capitalize } from '../../util';
+import { Offer } from '../../types/types';
 
 type PlaceCardProps = {
   offer: Offer;

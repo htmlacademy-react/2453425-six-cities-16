@@ -1,8 +1,11 @@
-import { Link } from 'react-router-dom';
-import SignUser from '../header-nav/header-nav';
+import { Link, useLocation } from 'react-router-dom';
+import SignUser from '../sign-user/sign-user';
 import { AppRoute } from '../../const';
 
 function Header(): JSX.Element {
+  const { pathname } = useLocation();
+  const isLoginPage = pathname === String(AppRoute.Login);
+
   return (
     <header className="header">
       <div className="container">
@@ -21,7 +24,7 @@ function Header(): JSX.Element {
               />
             </Link>
           </div>
-          <SignUser />
+          {!isLoginPage && <SignUser />}
         </div>
       </div>
     </header>

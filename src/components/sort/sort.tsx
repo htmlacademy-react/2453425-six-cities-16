@@ -1,37 +1,50 @@
-import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
+import classNames from 'classnames';
 import { SortType } from '../../const';
+import { useAppDispatch } from '../../hooks';
+import { setCurrentSort } from '../../store/offers-slice/offers-slice';
 
 type SortProps = {
-  sort: string;
-  onSortChange: React.Dispatch<React.SetStateAction<string>>;
+  currentSortType: SortType;
 };
 
-function Sort({ sort, onSortChange }: SortProps): JSX.Element {
+function Sort({ currentSortType }: SortProps): JSX.Element {
   const [isActive, setIsActive] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
 
-  const onSortClick = () => {
+  const handleSortClick = () => {
     setIsActive(!isActive);
   };
 
-  const onSortOptionClick = (
+  const handleSortOptionClick = (
     event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     const targetElement = event.target as HTMLElement;
-    if (targetElement.classList.contains('places__option')) {
-      onSortChange(targetElement.innerText);
-      setIsActive(!isActive);
+
+    if (!targetElement.classList.contains('places__option')) {
+      return;
     }
+
+    const selectedSort = Object.values(SortType).find(
+      (sortType) => String(sortType) === targetElement.innerText
+    );
+
+    if (!selectedSort) {
+      return;
+    }
+
+    dispatch(setCurrentSort(selectedSort));
+    setIsActive(!isActive);
   };
 
-  const onEscKeyDown = (event: KeyboardEvent) => {
+  const handleEscKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'Escape') {
       event.preventDefault();
       setIsActive(!isActive);
     }
   };
 
-  const onDocumentClick = (event: MouseEvent) => {
+  const handleDocumentClick = (event: MouseEvent) => {
     const tartgetElement = event.target as HTMLElement;
     if (
       tartgetElement.closest('.places__options') ||
@@ -45,21 +58,25 @@ function Sort({ sort, onSortChange }: SortProps): JSX.Element {
 
   useEffect(() => {
     if (isActive) {
-      document.addEventListener('keydown', onEscKeyDown);
-      document.addEventListener('click', onDocumentClick);
+      document.addEventListener('keydown', handleEscKeyDown);
+      document.addEventListener('click', handleDocumentClick);
     }
 
     return () => {
-      document.removeEventListener('keydown', onEscKeyDown);
-      document.removeEventListener('click', onDocumentClick);
+      document.removeEventListener('keydown', handleEscKeyDown);
+      document.removeEventListener('click', handleDocumentClick);
     };
   });
 
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex={0} onClick={onSortClick}>
-        &nbsp;{sort}
+      <span
+        className="places__sorting-type"
+        tabIndex={0}
+        onClick={handleSortClick}
+      >
+        &nbsp;{currentSortType}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
@@ -68,13 +85,13 @@ function Sort({ sort, onSortChange }: SortProps): JSX.Element {
         className={classNames('places__options places__options--custom', {
           'places__options--opened': isActive,
         })}
-        onClick={onSortOptionClick}
+        onClick={handleSortOptionClick}
       >
         {Object.values(SortType).map((sortItem) => (
           <li
             key={sortItem}
             className={classNames('places__option', {
-              'places__option--active': sortItem === sort,
+              'places__option--active': sortItem === currentSortType,
             })}
             tabIndex={0}
           >

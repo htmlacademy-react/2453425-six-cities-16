@@ -4,7 +4,6 @@ export enum AppRoute {
   Favorites = '/favorites',
   Offer = '/offer/:id',
   NotFound = '404',
-  City = '/:city',
 }
 
 export enum AuthorizationStatus {
@@ -25,7 +24,7 @@ export const URL_MARKER_DEFAULT = './img/pin.svg';
 
 export const URL_MARKER_ACTIVE = './img/pin-active.svg';
 
-export const CITY = [
+export const CITIES = [
   'Paris',
   'Cologne',
   'Brussels',
@@ -34,12 +33,12 @@ export const CITY = [
   'Dusseldorf',
 ] as const;
 
-export const SortType = {
-  POPULAR: 'Popular',
-  PRICE_LOW_TO_HIGH: 'Price: low to high',
-  PRICE_HIGH_TO_LOW: 'Price: high to low',
-  TOP_RATED_FIRST: 'Top rated first',
-};
+export enum SortType {
+  Popular = 'Popular',
+  PriceLowToHigh = 'Price: low to high',
+  PriceHighToLow = 'Price: high to low',
+  TopRatedFirst = 'Top rated first',
+}
 
 export enum Endpoint {
   Offers = '/offers',
@@ -54,4 +53,9 @@ export enum RequestStatus {
   Success = 'Success',
   Failed = 'Failed',
   Idle = 'Idle',
+}
+
+export enum NameSpace {
+  User = 'USER',
+  Offers = 'OFFERS',
 }

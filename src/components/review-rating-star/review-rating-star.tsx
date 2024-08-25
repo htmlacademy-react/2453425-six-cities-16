@@ -5,12 +5,14 @@ type ReviewRatingStarProps = {
   };
   onRatingChange: React.Dispatch<React.SetStateAction<number>>;
   stars: number;
+  isDisabled: boolean;
 };
 
 function ReviewRatingStar({
   rating: { title, mark },
   onRatingChange,
   stars,
+  isDisabled,
 }: ReviewRatingStarProps): JSX.Element {
   return (
     <>
@@ -20,10 +22,11 @@ function ReviewRatingStar({
         value={mark}
         id={`${mark}-stars`}
         type="radio"
+        disabled={isDisabled}
+        checked={mark === stars}
         onChange={(event) => {
           onRatingChange(+event.target.value);
         }}
-        checked={mark === stars}
       />
       <label
         htmlFor={`${mark}-stars`}

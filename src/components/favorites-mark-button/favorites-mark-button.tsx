@@ -1,8 +1,8 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { postFavoriteOffer } from '../../store/offers/thunks';
-import { setOfferFavorite } from '../../store/offers/offers-slice';
-import { setDetailedOfferFavorite } from '../../store/offers/offers-slice';
-import { getUserStatus } from '../../store/user/selectors';
+import { postFavoriteOffer } from '../../store/offers-slice/thunks';
+import { setOfferFavorite } from '../../store/offers-slice/offers-slice';
+import { setDetailedOfferFavorite } from '../../store/offers-slice/offers-slice';
+import { getUserStatus } from '../../store/user-slice/selectors';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,10 +21,15 @@ function FavoritesMarkButton({
   isActive = false,
   options = {},
 }: FavoritesMarkButtonProps): JSX.Element {
+  const { classNamePrefix = 'place-card', width = 18, height = 19 } = options;
+  const bookmarkButtonClass = isActive
+    ? `${classNamePrefix}__bookmark-button ${classNamePrefix}__bookmark-button--active button`
+    : `${classNamePrefix}__bookmark-button button`;
+  const bookmarkButtonText = isActive ? 'In bookmarks' : 'To bookmarks';
   const authStatus = useAppSelector(getUserStatus);
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { classNamePrefix = 'place-card', width = 18, height = 19 } = options;
   const onFavoritesMarkButtonClick = () => {
     if (authStatus !== AuthorizationStatus.Auth) {
       navigate(AppRoute.Login);
@@ -41,10 +46,6 @@ function FavoritesMarkButton({
         isActive = !isActive;
       });
   };
-  const bookmarkButtonClass = isActive
-    ? `${classNamePrefix}__bookmark-button ${classNamePrefix}__bookmark-button--active button`
-    : `${classNamePrefix}__bookmark-button button`;
-  const bookmarkButtonText = isActive ? 'In bookmarks' : 'To bookmarks';
 
   return (
     <button

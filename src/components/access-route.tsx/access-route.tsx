@@ -1,7 +1,8 @@
 import { Navigate } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { getUserStatus } from '../../store/user/selectors';
+import Loader from '../loader/loader';
+import { getUserStatus } from '../../store/user-slice/selectors';
+import { AppRoute, AuthorizationStatus } from '../../const';
 
 type AccessRouteProps = {
   children: JSX.Element;
@@ -17,7 +18,7 @@ function createAccessRoute(
       case statusToCheck:
         return children;
       case AuthorizationStatus.Unknown:
-        return 'Loading...';
+        return <Loader />;
       default:
         return <Navigate to={fallbackPath} />;
     }

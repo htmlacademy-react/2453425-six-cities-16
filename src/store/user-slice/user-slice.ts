@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { AuthorizationStatus } from '../../const';
 import { checkLogin, login, logout } from './thunks';
-import { dropToken, saveToken } from '../../services/token';
+import { AuthorizationStatus, NameSpace } from '../../const';
 import { AuthInfo } from '../../types/types';
 
 type UserState = {
@@ -15,7 +14,7 @@ const initialState: UserState = {
 };
 
 export const userSlice = createSlice({
-  name: 'user',
+  name: NameSpace.User,
   initialState,
   reducers: {},
   extraReducers: (builder) =>
@@ -23,7 +22,6 @@ export const userSlice = createSlice({
       .addCase(checkLogin.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
         state.userProfile = action.payload;
-        saveToken(action.payload.token);
       })
       .addCase(checkLogin.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
@@ -32,14 +30,12 @@ export const userSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
         state.userProfile = action.payload;
-        saveToken(action.payload.token);
       })
       .addCase(login.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.userProfile = null;
       })
       .addCase(logout.fulfilled, (state) => {
-        dropToken();
         state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.userProfile = null;
       }),

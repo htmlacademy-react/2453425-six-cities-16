@@ -1,4 +1,4 @@
-import { CITY } from '../const';
+import { CITIES } from '../const';
 
 declare global {
   interface ObjectConstructor {
@@ -9,11 +9,14 @@ declare global {
   }
 }
 
+export type GroupedOffers = Record<string, Offer[]>;
+
 export type Location = {
   latitude: number;
   longitude: number;
   zoom: number;
 };
+
 export type City = {
   name: string;
   location: Location;
@@ -73,4 +76,4 @@ export type Comment = {
 
 export type Comments = Comment[];
 
-export type CityName = (typeof CITY)[number];
+export type CityName = (typeof CITIES)[number];

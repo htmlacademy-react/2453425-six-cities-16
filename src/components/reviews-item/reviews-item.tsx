@@ -1,6 +1,6 @@
-import { Comment } from '../../types/types';
 import StarsRating from '../stars-rating/stars-rating';
 import UserAvatar from '../user-avatar/user-avatar';
+import { Comment } from '../../types/types';
 
 type ReviewsItemProps = {
   comment: Comment;
@@ -13,6 +13,7 @@ function ReviewsItem({ comment }: ReviewsItemProps): JSX.Element {
     month: 'long',
     year: 'numeric',
   });
+
   return (
     <li className="reviews__item">
       <UserAvatar user={comment.user} isHost={false} />

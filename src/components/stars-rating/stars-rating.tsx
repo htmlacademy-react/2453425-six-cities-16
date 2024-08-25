@@ -1,14 +1,11 @@
 import { ReactNode } from 'react';
+import { getRatingPercent } from '../../util';
 
 type StarsRatingProps = {
   rating: number;
   classNamePrefix?: string;
   children?: ReactNode;
 };
-
-function getRatingPercent(rating: number, total: number = 5): number {
-  return (Math.round(rating) / total) * 100;
-}
 
 function StarsRating({
   rating,

@@ -14,7 +14,6 @@ function UserAvatar({ user, isHost }: UserAvatarProps): JSX.Element {
   const proClassName = isHost && isPro ? 'offer__avatar-wrapper--pro' : '';
   const [imageWidth, imageHeight] = isHost ? [74, 74] : [54, 54];
   const alt = isHost ? 'Host avatar' : 'Reviews avatar';
-  const userName = isHost ? name : name.split(' ')[0];
 
   return (
     <div className={containerClassName}>
@@ -29,7 +28,7 @@ function UserAvatar({ user, isHost }: UserAvatarProps): JSX.Element {
           alt={alt}
         />
       </div>
-      <span className={`${classNamePrefix}__user-name`}>{userName}</span>
+      <span className={`${classNamePrefix}__user-name`}>{name}</span>
       {isPro && isHost && <span className="offer__user-status">Pro</span>}
     </div>
   );

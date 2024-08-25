@@ -2,13 +2,13 @@ import { capitalize } from '../../util';
 
 type OfferFeaturesProps = {
   type: string;
-  bedrooms: number;
+  bedroomsCount: number;
   maxAdults: number;
 };
 
 function OfferFeatures({
   type,
-  bedrooms,
+  bedroomsCount,
   maxAdults,
 }: OfferFeaturesProps): JSX.Element {
   return (
@@ -17,10 +17,10 @@ function OfferFeatures({
         {capitalize(type)}
       </li>
       <li className="offer__feature offer__feature--bedrooms">
-        {bedrooms} Bedrooms
+        {`${bedroomsCount} ${bedroomsCount > 1 ? 'Bedrooms' : 'Bedroom'}`}
       </li>
       <li className="offer__feature offer__feature--adults">
-        Max {maxAdults} adults
+        {`Max ${maxAdults} ${maxAdults > 1 ? 'adults' : 'adult'}`}
       </li>
     </ul>
   );
