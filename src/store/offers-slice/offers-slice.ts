@@ -30,6 +30,7 @@ type OffersState = {
   nearOffersStatus: RequestStatus;
   nearOffers: Offers;
   postReviewStatus: RequestStatus;
+  selectedOffer: Offer | null;
 };
 
 const initialState: OffersState = {
@@ -46,6 +47,7 @@ const initialState: OffersState = {
   nearOffersStatus: RequestStatus.Idle,
   nearOffers: [],
   postReviewStatus: RequestStatus.Idle,
+  selectedOffer: null,
 };
 
 export const offersSlice = createSlice({
